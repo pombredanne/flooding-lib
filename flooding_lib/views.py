@@ -14,6 +14,7 @@ from django.conf import settings
 from django.core.exceptions import PermissionDenied
 from django.core.paginator import Paginator
 from django.core.urlresolvers import reverse
+from django.core import management
 from django.db.models import Q
 from django.db.models import Count
 from django.http import HttpResponse, Http404, HttpResponseRedirect
@@ -21,6 +22,7 @@ from django.shortcuts import render_to_response, get_object_or_404
 from django.utils.translation import ugettext as _
 from django.views.generic import TemplateView
 from django.views.static import serve
+from django.views.decorators.csrf import csrf_exempt
 
 import lizard_ui.views
 
@@ -37,6 +39,7 @@ from flooding_lib.permission_manager import \
     receives_loggedin_permission_manager
 from flooding_lib import forms
 from flooding_lib import excel_import_export
+
 
 logger = logging.getLogger(__name__)
 
@@ -1523,3 +1526,25 @@ def excel_download(request, permission_manager, project_id):
         dirname=directory,
         filename=filename,
         nginx_dirname='/download_excel')
+
+
+@csrf_exempt
+def execute_scenarios_view(request, template='flooding/execute_scenario.html'):
+    """ execute scenario
+    """
+    scenarios = Scenario.objects.all()
+    return render_to_response(template,
+                              {'scenarios': scenarios})
+
+
+
+def start_scenario(request):
+    """ send message to message broker to start scenario
+    """
+    if request.method == 'POST':
+        scenario_id = request.POST.get('scenario_id')
+        template_code = request.POST.get('template_code')
+        print scenario_id, template_code
+        options = {'scenario_id': scenario_id,
+                   'workflowtemplate_id': template_code}
+        management.call_command('start_scenario_new', **options)    

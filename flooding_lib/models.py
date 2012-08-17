@@ -1238,24 +1238,25 @@ class Scenario(models.Model):
                     extrainfofield=eif)
             esi.value = unicode(value_object.value)
             esi.save()
-    
+
     def setup_initial_task(self, user):
         Task.objects.create(
             scenario=self,
-            tasktype=TaskType.objects.get(TaskType.TYPE_SCENARIO_CREATE),
+            tasktype=TaskType.objects.get(pk=TaskType.TYPE_SCENARIO_CREATE),
             creatorlog=user.get_full_name(),
             tstart=datetime.datetime.now())
-
-        self.workflow_template_id = (
-            workermodels.WorkflowTemplate.DEFAULT_TEMPLATE_CODE)
+        workflow_template = workermodels.WorkflowTemplate.objects.get(
+            code=workermodels.WorkflowTemplate.DEFAULT_TEMPLATE_CODE)
+        self.workflow_template_id = workflow_template
         self.save()
 
-    def setup_imported_task(self, user):
-        self.create_calculated_status(user.get_full_name())
-
-        self.workflow_template_id = (
-            workermodels.WorkflowTemplate.IMPORTED_TEMPLATE_CODE)
+    def setup_imported_task(self, username):
+        self.create_calculated_status(username)
+        workflow_template = workermodels.WorkflowTemplate.objects.get(
+            code=workermodels.WorkflowTemplate.IMPORTED_TEMPLATE_CODE)
+        self.workflow_template_id = workflow_template
         self.save()
+
 
 class ScenarioProject(models.Model):
     """Table implementing the ManyToMany relation between Scenario and Project.
