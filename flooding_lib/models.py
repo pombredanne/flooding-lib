@@ -20,6 +20,7 @@ from flooding_presentation.models import PresentationLayer, PresentationType
 from flooding_lib.tools.approvaltool.models import ApprovalObject
 from flooding_lib.tools.approvaltool.models import ApprovalObjectType
 from flooding_lib import coordinates
+from flooding_worker import models as workermodels
 
 logger = logging.getLogger(__name__)
 
@@ -924,7 +925,7 @@ class Scenario(models.Model):
     code = models.CharField(max_length=15, null=True)
 
     workflow_template = models.ForeignKey(
-        'flooding_worker.WorkflowTemplate',
+        workermodels.WorkflowTemplate,
         db_column='workflow_template',
         null=True)
 
@@ -1237,7 +1238,24 @@ class Scenario(models.Model):
                     extrainfofield=eif)
             esi.value = unicode(value_object.value)
             esi.save()
+    
+    def setup_initial_task(self, user):
+        Task.objects.create(
+            scenario=self,
+            tasktype=TaskType.objects.get(TaskType.TYPE_SCENARIO_CREATE),
+            creatorlog=user.get_full_name(),
+            tstart=datetime.datetime.now())
 
+        self.workflow_template_id = (
+            workermodels.WorkflowTemplate.DEFAULT_TEMPLATE_CODE)
+        self.save()
+
+    def setup_imported_task(self, user):
+        self.create_calculated_status(user.get_full_name())
+
+        self.workflow_template_id = (
+            workermodels.WorkflowTemplate.IMPORTED_TEMPLATE_CODE)
+        self.save()
 
 class ScenarioProject(models.Model):
     """Table implementing the ManyToMany relation between Scenario and Project.
