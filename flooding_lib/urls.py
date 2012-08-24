@@ -117,9 +117,6 @@ urlpatterns = patterns(
     url(r'^task/(?P<object_id>\d+)/$',
         'flooding_lib.views.task',
         name='flooding_task_detail'),
-    
-    url(r'^run$', 'flooding_lib.views.execute_scenarios_view',
-        name="execute_scenarios_view"),
 
     url(r'^service/$',
         'flooding_lib.services.service',
