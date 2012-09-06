@@ -21,7 +21,7 @@ from flooding_lib.tools.approvaltool.models import ApprovalObject
 from flooding_lib.tools.approvaltool.models import ApprovalObjectType
 from flooding_lib import coordinates
 from flooding_worker import models as workermodels
-from flooding_worker.worker import executor as workerexecutor
+from flooding_worker import executor as workerexecutor
 
 logger = logging.getLogger(__name__)
 
