@@ -30,7 +30,7 @@ def update_scenario_status_cache(scenario_id):
     Update the scenario's status_cache to CALCULATED.
     """
     scenario = Scenario.objects.get(pk=scenario_id)
-    scenario.has_sobek_presentaition = True
+    scenario.has_sobek_presentation = True
     scenario.save()
     scenario.update_status()
 
