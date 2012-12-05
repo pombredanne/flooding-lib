@@ -59,6 +59,9 @@ scenario a value of "True" for the approval is saved.
 2.38 (2012-11-27)
 -----------------
 
+- Removed dependencies on ThreediModel and ThreediCalculation, everything is
+  in Scenario, SobekModel now.
+
 - Fix checkboxfields to select maps for export.
 
 
