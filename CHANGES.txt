@@ -4,7 +4,8 @@ Changelog of flooding-lib
 2.46 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Removed dependencies on ThreediModel and ThreediCalculation, everything is
+  in Scenario, SobekModel now.
 
 
 2.45 (2012-12-03)
@@ -58,9 +59,6 @@ scenario a value of "True" for the approval is saved.
 
 2.38 (2012-11-27)
 -----------------
-
-- Removed dependencies on ThreediModel and ThreediCalculation, everything is
-  in Scenario, SobekModel now.
 
 - Fix checkboxfields to select maps for export.
 
