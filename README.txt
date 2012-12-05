@@ -49,7 +49,8 @@ Upgrade to 3Di support
 
 - Make a SobekModel object, with version "3di".
 
-- Make a 3Di specific region and add a breach.
+- Make a 3Di specific region and add a breach. Add the newly created
+  SobekModel to the region.
 
 - Make the region part of a region set.
 
