@@ -116,12 +116,16 @@ class SobekModel(models.Model):
     sobekmodeltype = models.IntegerField(choices=SOBEKMODELTYPE_CHOICES)
 
     active = models.BooleanField(default=True)
-    project_fileloc = models.CharField(max_length=200)
+    project_fileloc = models.CharField(
+        max_length=200, 
+        help_text='In case of 3Di, point to model zipfile.')
     model_case = models.IntegerField()
     model_version = models.CharField(max_length=20)
     model_srid = models.IntegerField()
 
-    model_varname = models.CharField(max_length=40, null=True, blank=True)
+    model_varname = models.CharField(
+        max_length=40, null=True, blank=True,
+        help_text='In case of 3Di, .mdu filename in zip.')
     model_vardescription = models.CharField(
         max_length=200, null=True, blank=True)
     remarks = models.TextField(null=True)
