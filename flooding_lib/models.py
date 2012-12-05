@@ -91,7 +91,12 @@ class SobekVersion(models.Model):
 
 
 class SobekModel(models.Model):
-    """sobekmodel properties:
+    """
+    It is actual a Sobek Model, OR a 3Di model.
+
+    3Di models have version '3di'
+
+    sobekmodel properties:
 
     - has a sobekversion
     - has a sobekmodeltype
