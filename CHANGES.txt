@@ -8,6 +8,7 @@ Changelog of flooding-lib
 - Added functionality to create a 3di scenario.
 - Removed dependencies on ThreediModel and ThreediCalculation, everything is
   in Scenario, SobekModel now. Updated task 210, 220.
+- Pinnend to lizard-worker >= 0.10, flooding-base >= 1.34
 
 
 2.45 (2012-12-03)
