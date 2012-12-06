@@ -6,6 +6,8 @@ Changelog of flooding-lib
 
 - Added datamigration schema to create a new workflowtemplates for 3di en export maps.
 - Added functionality to create a 3di scenario.
+- Removed dependencies on ThreediModel and ThreediCalculation, everything is
+  in Scenario, SobekModel now. Updated task 210, 220.
 
 
 2.45 (2012-12-03)
