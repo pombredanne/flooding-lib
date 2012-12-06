@@ -79,7 +79,7 @@ def run_threedi_task(some_id, some_type):
         #print result_folder
 
         try:
-            print 'creating result folder...'
+            print 'creating result folder %s...' % result_folder
             os.makedirs(result_folder)
         except OSError:
             print 'warning: error creating folder %s, does it already exist?' % result_folder

@@ -5,7 +5,7 @@ Changelog of flooding-lib
 -----------------
 
 - Removed dependencies on ThreediModel and ThreediCalculation, everything is
-  in Scenario, SobekModel now.
+  in Scenario, SobekModel now. Updated task 210, 220.
 
 
 2.45 (2012-12-03)
