@@ -131,12 +131,17 @@ class SobekModel(models.Model):
         max_length=200, null=True, blank=True)
 
     code = models.CharField(max_length=15, null=True, blank=True)
-
+    
     class Meta:
         verbose_name = _('Sobek model')
         verbose_name_plural = _('Sobek models')
         db_table = 'flooding_sobekmodel'
 
+    def is_3di(self):
+        """Return True if this models is 3di."""
+        return (
+            self.sobekversion.name == "3di")
+        
     def __unicode__(self):
         return ('type: %s case: %d version: %s' %
                 (self.TYPE_DICT[self.sobekmodeltype],
@@ -1022,6 +1027,10 @@ class Scenario(models.Model):
     # Set by 'task 155' in the new flooding-worker tasks.
     has_sobek_presentation = models.NullBooleanField()
 
+    # This field for 3di a setting
+    config_3di = models.CharField(
+        max_length=50, blank=True, null=True)
+    
     class Meta:
         ordering = ('name', 'owner', )
         verbose_name = _('Scenario')
@@ -1386,8 +1395,12 @@ class Scenario(models.Model):
             creatorlog=user.get_full_name(),
             tstart=datetime.datetime.now())
 
-        workflow_template = workermodels.WorkflowTemplate.objects.get(
-            code=workermodels.WorkflowTemplate.DEFAULT_TEMPLATE_CODE)
+        if self.is_3di():
+            workflow_template = workermodels.WorkflowTemplate.objects.get(
+                code=workermodels.WorkflowTemplate.THREEDI_TEMPLATE_CODE)
+        else:
+            workflow_template = workermodels.WorkflowTemplate.objects.get(
+                code=workermodels.WorkflowTemplate.DEFAULT_TEMPLATE_CODE)
         self.workflow_template = workflow_template
         self.save()
         workerexecutor.start_workflow(self.id, self.workflow_template.id)
@@ -1455,6 +1468,11 @@ class Scenario(models.Model):
         # Plus something like "Dijkring xx/1234"
         output_dir_name = os.path.join(dst_dir, self.get_rel_destdir())
         return output_dir_name
+
+    def is_3di(self):
+        """Return True if this scenario uses 3di."""
+        return (
+            self.sobekmodel_inundation.sobekversion.name == "3di")
 
     # def get_abs_srcdir(self):
     #     """

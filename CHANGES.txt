@@ -4,7 +4,8 @@ Changelog of flooding-lib
 2.46 (unreleased)
 -----------------
 
-- Nothing changed yet.
+- Added datamigration schema to create a new workflowtemplates for 3di en export maps.
+- Added functionality to create a 3di scenario.
 
 
 2.45 (2012-12-03)
